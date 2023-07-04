@@ -1,0 +1,39 @@
+﻿@model List<cartProducts>
+
+<table class="table table-dark table-hover">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cartProduct in Model)
+        {
+            <tr>
+                <td>@cartProduct.Id</td>
+                <td>@cartProduct.Product.Name</td>
+                <td>@cartProduct.Product.Price TL</td>
+                <td>@cartProduct.Quantity </td>
+                <td>@(cartProduct.Product.Price * cartProduct.Quantity) TL</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4">Total:</td>
+            <td>@Model.Sum(cartProduct => cartProduct.Product.Price * cartProduct.Quantity) TL</td>
+        </tr>
+        <tr>
+            <td colspan="4">Tax (KDV):</td>
+            <td>@(Model.Sum(cartProduct => cartProduct.Product.Price * cartProduct.Quantity) * 0.18m) TL</td>
+        </tr>
+        <tr>
+            <td colspan="4">Total with Tax (KDV'li Tutar):</td>
+            <td>@(Model.Sum(cartProduct => cartProduct.Product.Price * cartProduct.Quantity) * 1.18m) TL</td>
+        </tr>
+    </tfoot>
+</table>
